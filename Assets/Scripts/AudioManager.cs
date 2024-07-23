@@ -5,7 +5,10 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-    [SerializeField] private AudioSource music, soundEffects;
+
+    [SerializeField] private AudioClip[] _tracks;
+    [SerializeField] private AudioSource _music, _soundEffects;
+
 
     private void Awake()
     {
@@ -21,8 +24,19 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        music.Play();
+        PlayMusic(0);
     }
 
-    public void PlaySFX(AudioClip clip) => soundEffects.PlayOneShot(clip, 1.0f);
+    public void PlayMusic(int index)
+    {
+        AudioClip newClip = _tracks[index];
+        if (_music.clip != newClip)
+        {
+            _music.Stop();
+            _music.clip = newClip;
+            _music.Play();
+        }
+    }
+
+    public void PlaySFX(AudioClip clip) => _soundEffects.PlayOneShot(clip, 1.0f);
 }
