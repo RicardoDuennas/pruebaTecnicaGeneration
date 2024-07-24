@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -38,5 +36,5 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(AudioClip clip) => _soundEffects.PlayOneShot(clip, 1.0f);
+    public void PlaySFX(AudioClip clip, float volume) => _soundEffects.PlayOneShot(clip, volume);
 }
