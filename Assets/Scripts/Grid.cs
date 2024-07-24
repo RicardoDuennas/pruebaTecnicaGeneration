@@ -1,14 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 
 public class Grid : MonoBehaviour
 {
     public Material terrainMaterial;
-    public Material edgeMaterial;
-    public float waterLevel = 1.0f;
+    public float soilLevel = 1.0f;
     public float scale = .1f;
-    public int size = 100;
-    private Color tierraColor = new Color(0.7f, 0.4f, 0.0f, 1.0f);
+    public int size = 15;
+    public Texture2D[] landTextures;
+    public Texture2D[] soilTextures;
+    public int deltaX;
+    public int deltaY;
+    
 
     Cell[,] grid;
 
@@ -22,30 +27,19 @@ public class Grid : MonoBehaviour
             }
         }
 
-        float[,] falloffMap = new float[size, size];
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
-                float xv = x / (float)size * 2 - 1;
-                float yv = y / (float)size * 2 - 1;
-                float v = Mathf.Max(Mathf.Abs(xv), Mathf.Abs(yv));
-                //falloffMap[x, y] = Mathf.Pow(v, 10f) / (Mathf.Pow(v, 10f) + Mathf.Pow(2.2f - 2.2f * v, 10f));
-            }
-        }
-
         grid = new Cell[size, size];
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 float noiseValue = noiseMap[x, y];
-                noiseValue -= falloffMap[x, y];
-                bool isWater = noiseValue < waterLevel;
-                Cell cell = new Cell(isWater);
+                bool isSoil = noiseValue < soilLevel;
+                Cell cell = new Cell(isSoil);
                 grid[x, y] = cell;
             }
         }
 
         DrawTerrainMesh(grid);
-        DrawEdgeMesh(grid);
         DrawTexture(grid);
+        Debug.Log(getLandPercentage());    
     }
 
     void DrawTerrainMesh(Cell[,] grid) {
@@ -56,7 +50,7 @@ public class Grid : MonoBehaviour
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 Cell cell = grid[x, y];
-           /*      if(!cell.isWater) { */
+           /*      if(!cell.isSoil) { */
                     Vector3 a = new Vector3(x - .5f, 0, y + .5f);
                     Vector3 b = new Vector3(x + .5f, 0, y + .5f);
                     Vector3 c = new Vector3(x - .5f, 0, y - .5f);
@@ -86,99 +80,54 @@ public class Grid : MonoBehaviour
         MeshRenderer meshRenderer = gameObject.AddComponent<MeshRenderer>();
     }
 
-    void DrawEdgeMesh(Cell[,] grid) {
-        Mesh mesh = new Mesh();
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
+/*     void DrawTexture(Cell[,] grid, Texture2D waterTexture, Texture2D landTexture)
+    {
+        Texture2D texture = new Texture2D(size, size);
+        Color[] colorMap = new Color[size * size]; // This array is no longer needed
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
                 Cell cell = grid[x, y];
-                if(!cell.isWater) {
-                    if(x > 0) {
-                        Cell left = grid[x - 1, y];
-                        if(left.isWater) {
-                            Vector3 a = new Vector3(x - .5f, 0, y + .5f);
-                            Vector3 b = new Vector3(x - .5f, 0, y - .5f);
-                            Vector3 c = new Vector3(x - .5f, -1, y + .5f);
-                            Vector3 d = new Vector3(x - .5f, -1, y - .5f);
-                            Vector3[] v = new Vector3[] { a, b, c, b, d, c };
-                            for(int k = 0; k < 6; k++) {
-                                vertices.Add(v[k]);
-                                triangles.Add(triangles.Count);
-                            }
-                        }
-                    }
-                    if(x < size - 1) {
-                        Cell right = grid[x + 1, y];
-                        if(right.isWater) {
-                            Vector3 a = new Vector3(x + .5f, 0, y - .5f);
-                            Vector3 b = new Vector3(x + .5f, 0, y + .5f);
-                            Vector3 c = new Vector3(x + .5f, -1, y - .5f);
-                            Vector3 d = new Vector3(x + .5f, -1, y + .5f);
-                            Vector3[] v = new Vector3[] { a, b, c, b, d, c };
-                            for(int k = 0; k < 6; k++) {
-                                vertices.Add(v[k]);
-                                triangles.Add(triangles.Count);
-                            }
-                        }
-                    }
-                    if(y > 0) {
-                        Cell down = grid[x, y - 1];
-                        if(down.isWater) {
-                            Vector3 a = new Vector3(x - .5f, 0, y - .5f);
-                            Vector3 b = new Vector3(x + .5f, 0, y - .5f);
-                            Vector3 c = new Vector3(x - .5f, -1, y - .5f);
-                            Vector3 d = new Vector3(x + .5f, -1, y - .5f);
-                            Vector3[] v = new Vector3[] { a, b, c, b, d, c };
-                            for(int k = 0; k < 6; k++) {
-                                vertices.Add(v[k]);
-                                triangles.Add(triangles.Count);
-                            }
-                        }
-                    }
-                    if(y < size - 1) {
-                        Cell up = grid[x, y + 1];
-                        if(up.isWater) {
-                            Vector3 a = new Vector3(x + .5f, 0, y + .5f);
-                            Vector3 b = new Vector3(x - .5f, 0, y + .5f);
-                            Vector3 c = new Vector3(x + .5f, -1, y + .5f);
-                            Vector3 d = new Vector3(x - .5f, -1, y + .5f);
-                            Vector3[] v = new Vector3[] { a, b, c, b, d, c };
-                            for(int k = 0; k < 6; k++) {
-                                vertices.Add(v[k]);
-                                triangles.Add(triangles.Count);
-                            }
-                        }
+                texture.SetPixel(x, y, cell.isSoil ? waterTexture.GetPixel(x, y) : landTexture.GetPixel(x, y));
+            }
+        }
+
+        texture.filterMode = FilterMode.Point;
+        texture.Apply();
+
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        meshRenderer.material = terrainMaterial;
+        meshRenderer.material.mainTexture = texture;
+    } */
+
+
+    void DrawTexture(Cell[,] grid)
+    {
+        int textureSize = size * 32; // Each cell is 32x32 pixels
+        Texture2D texture = new Texture2D(textureSize, textureSize);
+        Color[] colorMap = new Color[textureSize * textureSize];
+
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                Cell cell = grid[x, y];
+                Texture2D cellTexture = cell.isSoil ? soilTextures[Random.Range(0, soilTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
+
+                for (int ty = 0; ty < 32; ty++)
+                {
+                    for (int tx = 0; tx < 32; tx++)
+                    {
+                        int pixelX = x * 32 + tx;
+                        int pixelY = y * 32 + ty;
+                        colorMap[pixelY * textureSize + pixelX] = cellTexture.GetPixel(tx, ty);
                     }
                 }
             }
         }
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-        mesh.RecalculateNormals();
 
-        GameObject edgeObj = new GameObject("Edge");
-        edgeObj.transform.SetParent(transform);
-
-        MeshFilter meshFilter = edgeObj.AddComponent<MeshFilter>();
-        meshFilter.mesh = mesh;
-
-        MeshRenderer meshRenderer = edgeObj.AddComponent<MeshRenderer>();
-        meshRenderer.material = edgeMaterial;
-    }
-
-    void DrawTexture(Cell[,] grid) {
-        Texture2D texture = new Texture2D(size, size);
-        Color[] colorMap = new Color[size * size];
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
-                Cell cell = grid[x, y];
-                if(cell.isWater)
-                    colorMap[y * size + x] = tierraColor;
-                else
-                    colorMap[y * size + x] = Color.green;
-            }
-        }
         texture.filterMode = FilterMode.Point;
         texture.SetPixels(colorMap);
         texture.Apply();
@@ -188,18 +137,46 @@ public class Grid : MonoBehaviour
         meshRenderer.material.mainTexture = texture;
     }
 
-    void OnDrawGizmos() {
-        if(!Application.isPlaying) return;
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
+    public float getLandPercentage(){
+        int total = size * size;
+        int sum = 0;
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
                 Cell cell = grid[x, y];
-                if(cell.isWater)
-                    Gizmos.color = Color.blue;
-                else
-                    Gizmos.color = Color.green;
-                Vector3 pos = new Vector3(x, 0, y);
-                Gizmos.DrawCube(pos, Vector3.one);
+                if (!cell.isSoil) sum += 1;
+                //Debug.Log($"{x} {y} {cell.isSoil} {sum} {(float)sum/total*100}");
             }
         }
+        return (float)sum/total;
     }
+    public void swapSquare(Cell[,] grid, int x, int y){
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        int textureSize = size * 32; // Each cell is 32x32 pixels
+        Texture2D texture = (Texture2D)meshRenderer.material.mainTexture;
+
+        Cell cell = grid[x, y];
+        cell.isSoil = !cell.isSoil;
+        Texture2D cellTexture = cell.isSoil ? soilTextures[Random.Range(0, soilTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
+
+        for (int ty = 0; ty < 32; ty++)
+        {
+            for (int tx = 0; tx < 32; tx++)
+            {
+                int pixelX = x * 32 + tx;
+                int pixelY = y * 32 + ty;
+                texture.SetPixel(pixelX, pixelY, cellTexture.GetPixel(tx, ty));
+            }
+        }
+        texture.Apply();
+        meshRenderer.material.mainTexture = texture;
+    }
+
+    [ContextMenu("Cambia el cuadro")]
+    public void trigger(){
+        swapSquare(grid, deltaX, deltaY);
+        Debug.Log(getLandPercentage());    
+    }
+
 }
