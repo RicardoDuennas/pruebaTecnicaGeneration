@@ -138,8 +138,8 @@ public class Grid3DPlayerController : MonoBehaviour
             // Asegurarse de que el árbol no se destruya automáticamente
             DontDestroyOnLoad(tree);
 
-            gridCells[(int)position.x, (int)position.z].isSoil = false;    
-            gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);
+            gridCells[(int)position.x, (int)position.z].isSoil = false;                 // Changes the state of the cell to land 
+            gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);  // Changes the cell texture to land
 
 //            ChangeGroundMaterial(position, grassMaterial);
 

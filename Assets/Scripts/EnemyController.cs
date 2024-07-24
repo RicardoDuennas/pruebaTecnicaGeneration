@@ -8,11 +8,14 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 5f;
     public float attackDuration = 2f;
     public Material sandMaterial;
+    public Grid gridObject;
+
     private AudioSource enemyAudioSource;
     [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip;
 
 
     private Grid3DPlayerController playerController;
+    public Cell[,] gridCells;
 
     void Start()
     {
@@ -24,6 +27,9 @@ public class EnemyController : MonoBehaviour
             Debug.LogError("No se encontró el Grid3DPlayerController en la escena.");
             return;
         }
+
+        gridObject = GameObject.Find("Grid").GetComponent<Grid>();
+        gridCells = gridObject.grid;
 
         StartCoroutine(EnemyRoutine());
     }
@@ -113,6 +119,9 @@ public class EnemyController : MonoBehaviour
             playEnemySFX(treeFallingAudioClip);
             Debug.Log("Árbol destruido en: " + treePosition);
             ChangeGroundMaterial(treePosition);
+            gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
+            gridObject.swapSquare(gridCells, (int)treePosition.x, (int)treePosition.z, true);   // Changes the cell texture to soil
+
         }
         else
         {
