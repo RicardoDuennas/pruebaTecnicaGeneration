@@ -7,7 +7,8 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 5f;
     public float attackDuration = 2f;
     public Material sandMaterial;
-    //[SerializeField] private AudioClip AlarmAudioClip, deathAudioClip, munchingAudioClip; 
+    [SerializeField] private AudioClip deathAudioClip, munchingAudioClip, treeFallsAudioClip;
+    private AudioSource enemyAudioSource;
     private Grid3DPlayerController playerController;
 
     void Start()
@@ -71,6 +72,8 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log("Iniciando ataque al árbol en: " + treePosition);
 
+        PlayEnemySFX(munchingAudioClip, 0.5f);
+
         if (!playerController.PlantedTrees.ContainsKey(treePosition))
         {
             Debug.Log("El árbol ya no está aquí.");
@@ -85,6 +88,7 @@ public class EnemyController : MonoBehaviour
             GameObject tree = playerController.PlantedTrees[treePosition];
             playerController.PlantedTrees.Remove(treePosition);
             Destroy(tree);
+            AudioManager.Instance.PlaySFX(treeFallsAudioClip, 1f);
             Debug.Log("Árbol destruido en: " + treePosition);
             ChangeGroundMaterial(treePosition);
         }
@@ -107,4 +111,10 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    private void PlayEnemySFX(AudioClip clip, float volume)
+    {
+        if (enemyAudioSource.isPlaying) return;
+        enemyAudioSource.PlayOneShot(clip, volume);
+    } 
 }

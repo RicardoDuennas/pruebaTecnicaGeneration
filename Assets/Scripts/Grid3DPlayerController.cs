@@ -10,7 +10,7 @@ public class Grid3DPlayerController : MonoBehaviour
     public GameObject treePrefab;
     public GameObject trenchPrefab;
     public Material grassMaterial;
-    [SerializeField] AudioClip pathBlockedAudioClip, plantAudioClip, drillAudioClip, walkAudioClip;
+    [SerializeField] AudioClip pathBlockedAudioClip, plantAudioClip, drillAudioClip, walkAudioClip;   
     private bool isMoving = false;
     private Vector3 targetPos;
     private Quaternion targetRot;
