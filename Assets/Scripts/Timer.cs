@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using TMPro;
 
 public class Timer : MonoBehaviour
 {
     [SerializeField] TMP_Text timer;
     public GameOverMenu GameOverMenu;
+    
     public float time = 5;
 
    
