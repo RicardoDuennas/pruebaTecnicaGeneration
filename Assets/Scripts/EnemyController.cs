@@ -13,11 +13,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         playerController = FindObjectOfType<Grid3DPlayerController>();
-        if (playerController == null)
-        {
-            Debug.LogError("No se encontró el Grid3DPlayerController en la escena.");
-            return;
-        }
+        
 
         StartCoroutine(EnemyRoutine());
     }
@@ -25,21 +21,26 @@ public class EnemyController : MonoBehaviour
     private IEnumerator EnemyRoutine()
     {
         while (true)
-        {
+        {   // Busca el árbol más cercano
             Vector3? treePosition = FindNearestTree();
             if (treePosition.HasValue)
-            {
+            {   
+                // Si se encuentra un árbol, mueve al enemigo hacia él y lo ataca
                 yield return StartCoroutine(MoveToTree(treePosition.Value));
                 yield return StartCoroutine(AttackTree(treePosition.Value));
             }
             else
             {
-                Debug.Log("No se encontraron árboles. Esperando...");
+                // Si no hay árboles, espera un segundo antes de buscar de nuevo
                 yield return new WaitForSeconds(1f);
             }
         }
     }
 
+     /// <summary>
+    /// Encuentra la posición del árbol más cercano al enemigo.
+    /// </summary>
+    /// <returns>La posición del árbol más cercano, o null si no hay árboles.</returns>
     private Vector3? FindNearestTree()
     {
         float nearestDistance = float.MaxValue;
@@ -58,53 +59,87 @@ public class EnemyController : MonoBehaviour
         return nearestTreePos;
     }
 
+     /// <summary>
+    /// Mueve al enemigo hacia la posición del árbol especificado.
+    /// </summary>
+    /// <param name="treePosition">La posición del árbol objetivo.</param>
+
+    
     private IEnumerator MoveToTree(Vector3 treePosition)
     {
         while (Vector3.Distance(transform.position, treePosition) > 0.1f)
-        {
+        {    // Mover hacia el árbol
             transform.position = Vector3.MoveTowards(transform.position, treePosition, moveSpeed * Time.deltaTime);
-            yield return null;
+            
+            // Calcular la direccion hacia el árbol
+            Vector3 directionToTree = (treePosition - transform.position).normalized;
+
+            // Ignorar la componente y para que el enemigo no se mueva en el eje y
+            directionToTree.y = 0;
+        
+    
+        // Rotar hacia el arbol 
+        if (directionToTree != Vector3.zero)
+        {
+             Quaternion targetRotation = Quaternion.LookRotation(directionToTree);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
+        }
+    
+        yield return null;
         }
     }
 
+    /// <summary>
+    /// Realiza el ataque al árbol en la posición especificada.
+    /// </summary>
+    /// <param name="treePosition">La posición del árbol a atacar.</param>
+
+
     private IEnumerator AttackTree(Vector3 treePosition)
     {
-        Debug.Log("Iniciando ataque al árbol en: " + treePosition);
+    
+        // Asegura que el enemigo mire directamente al árbol durante el ataque
+        transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
 
+        // Verifica si el árbol aún existe
         if (!playerController.PlantedTrees.ContainsKey(treePosition))
         {
-            Debug.Log("El árbol ya no está aquí.");
+        
             yield break;
         }
 
-        Debug.Log("Enemigo está destruyendo un árbol!");
+        
         yield return new WaitForSeconds(attackDuration);
 
         if (playerController.PlantedTrees.ContainsKey(treePosition))
-        {
+        {   
+            // Destruye el árbol y cambia el material del terreno
             GameObject tree = playerController.PlantedTrees[treePosition];
             playerController.PlantedTrees.Remove(treePosition);
             Destroy(tree);
             Debug.Log("Árbol destruido en: " + treePosition);
-            ChangeGroundMaterial(treePosition);
+           // ChangeGroundMaterial(treePosition);
         }
-        else
-        {
-            Debug.Log("El árbol fue removido durante el ataque.");
-        }
+       
     }
 
-    private void ChangeGroundMaterial(Vector3 position)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit))
-        {
-            Renderer renderer = hit.collider.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.material = sandMaterial;
-                Debug.Log("Terreno cambiado a arena en: " + position);
-            }
-        }
-    }
+    /// <summary>
+    /// Cambia el material del terreno en la posición especificada.
+    /// </summary>
+    /// <param name="position">La posición donde cambiar el material del terreno.</param>
+
+   
+   // private void ChangeGroundMaterial(Vector3 position)
+   // {
+    //    RaycastHit hit;
+    //    if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit))
+    //    {
+    //        Renderer renderer = hit.collider.GetComponent<Renderer>();
+    //        if (renderer != null)
+     //       {
+     //           renderer.material = sandMaterial;
+                
+      //      }
+      //  }
+   // }
 }

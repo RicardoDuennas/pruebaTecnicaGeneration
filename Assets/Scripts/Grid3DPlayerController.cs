@@ -118,14 +118,11 @@ public class Grid3DPlayerController : MonoBehaviour
         // Asegurarse de que el árbol no se destruya automáticamente
         DontDestroyOnLoad(tree);
         
-        ChangeGroundMaterial(position, grassMaterial);
+      //  ChangeGroundMaterial(position, grassMaterial);
         
-        Debug.Log("Árbol plantado en: " + position);
+        
     }
-    else
-    {
-        Debug.Log("Ya hay un árbol en esta posición: " + position);
-    }
+    
     }
 
     /// <summary>
@@ -153,13 +150,13 @@ public class Grid3DPlayerController : MonoBehaviour
                            Mathf.Round(transform.position.z / cellSize) * cellSize);
     }
 
-    private void ChangeGroundMaterial(Vector3 position, Material material)
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit))
-        {
-            hit.collider.GetComponent<Renderer>().material = material;
-        }
-    }
+ //   private void ChangeGroundMaterial(Vector3 position, Material material)
+ //   {
+   //     RaycastHit hit;
+  //     if (Physics.Raycast(position + Vector3.up, Vector3.down, out hit))
+   //     {
+   //         hit.collider.GetComponent<Renderer>().material = material;
+  //      }
+  //  }
 
 }
