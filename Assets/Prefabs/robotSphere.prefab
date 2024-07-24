@@ -3422,7 +3422,7 @@ Transform:
   m_GameObject: {fileID: 49392465996238909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.18393, y: 0.02, z: -0.0021059}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 4.7885013, y: 4.7885013, z: 4.7885013}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 52582010261062191}
@@ -3467,7 +3467,11 @@ MonoBehaviour:
   rotationSpeed: 720
   treePrefab: {fileID: 137650, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
   trenchPrefab: {fileID: 3256568923514548448, guid: a71ea9ef9b659a24f8107f8b0b13cdce, type: 3}
-  grassMaterial: {fileID: 0}
+  grassMaterial: {fileID: 2100000, guid: d81f69e3b6b6c944780a10bf30cd2e45, type: 2}
+  pathBlockedAudioClip: {fileID: 8300000, guid: 35436ee4ae8987d4aab3971b89ef41f6, type: 3}
+  plantAudioClip: {fileID: 8300000, guid: 195b47dc74b7bc440ba204b4b9176a9c, type: 3}
+  drillAudioClip: {fileID: 8300000, guid: fa7b6fdd8622f514eaa7d9e365cb13d9, type: 3}
+  walkAudioClip: {fileID: 8300000, guid: 5c237ec1b5bafe542ba55bfe59677379, type: 3}
 --- !u!1 &49393019348852287
 GameObject:
   m_ObjectHideFlags: 0
