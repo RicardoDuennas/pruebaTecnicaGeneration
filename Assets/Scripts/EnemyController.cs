@@ -62,15 +62,32 @@ public class EnemyController : MonoBehaviour
     private IEnumerator MoveToTree(Vector3 treePosition)
     {
         while (Vector3.Distance(transform.position, treePosition) > 0.1f)
-        {
+        {    // Mover hacia el árbol
             transform.position = Vector3.MoveTowards(transform.position, treePosition, moveSpeed * Time.deltaTime);
-            yield return null;
+            
+            // Calcular la direccion hacia el árbol
+            Vector3 directionToTree = (treePosition - transform.position).normalized;
+
+            // Ignorar la componente y para que el enemigo no se mueva en el eje y
+            directionToTree.y = 0;
+        
+    
+        // Rotar hacia el arbol 
+        if (directionToTree != Vector3.zero)
+        {
+             Quaternion targetRotation = Quaternion.LookRotation(directionToTree);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
+        }
+    
+        yield return null;
         }
     }
 
     private IEnumerator AttackTree(Vector3 treePosition)
     {
         Debug.Log("Iniciando ataque al árbol en: " + treePosition);
+
+        transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
 
         PlayEnemySFX(munchingAudioClip, 0.5f);
 
