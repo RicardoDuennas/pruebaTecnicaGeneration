@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,16 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 5f;
     public float attackDuration = 2f;
     public Material sandMaterial;
-    [SerializeField] private AudioClip deathAudioClip, munchingAudioClip, treeFallsAudioClip;
     private AudioSource enemyAudioSource;
+    [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip;
+
+
     private Grid3DPlayerController playerController;
 
     void Start()
     {
+        enemyAudioSource = GetComponent<AudioSource>();
+        
         playerController = FindObjectOfType<Grid3DPlayerController>();
         if (playerController == null)
         {
@@ -81,6 +86,7 @@ public class EnemyController : MonoBehaviour
     
         yield return null;
         }
+    
     }
 
     private IEnumerator AttackTree(Vector3 treePosition)
@@ -89,8 +95,6 @@ public class EnemyController : MonoBehaviour
 
         transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
 
-        PlayEnemySFX(munchingAudioClip, 0.5f);
-
         if (!playerController.PlantedTrees.ContainsKey(treePosition))
         {
             Debug.Log("El árbol ya no está aquí.");
@@ -98,6 +102,7 @@ public class EnemyController : MonoBehaviour
         }
 
         Debug.Log("Enemigo está destruyendo un árbol!");
+        playEnemySFX(eatingAudioClip);
         yield return new WaitForSeconds(attackDuration);
 
         if (playerController.PlantedTrees.ContainsKey(treePosition))
@@ -105,7 +110,7 @@ public class EnemyController : MonoBehaviour
             GameObject tree = playerController.PlantedTrees[treePosition];
             playerController.PlantedTrees.Remove(treePosition);
             Destroy(tree);
-            AudioManager.Instance.PlaySFX(treeFallsAudioClip, 1f);
+            playEnemySFX(treeFallingAudioClip);
             Debug.Log("Árbol destruido en: " + treePosition);
             ChangeGroundMaterial(treePosition);
         }
@@ -129,9 +134,8 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void PlayEnemySFX(AudioClip clip, float volume)
+    private void playEnemySFX(AudioClip clip)
     {
-        if (enemyAudioSource.isPlaying) return;
-        enemyAudioSource.PlayOneShot(clip, volume);
-    } 
+        enemyAudioSource.PlayOneShot(clip, 1f);
+    }
 }

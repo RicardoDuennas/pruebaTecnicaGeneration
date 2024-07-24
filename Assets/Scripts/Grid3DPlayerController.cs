@@ -11,34 +11,36 @@ public class Grid3DPlayerController : MonoBehaviour
     public float cellSize = 1f;
     public float moveSpeed = 5f;
     public float rotationSpeed = 720f;
+    [SerializeField] AudioClip pathBlockedAudioClip, plantingAudioClip, drillingAudioClip, walkingAudioClip;
     public GameObject treePrefab;
     public GameObject trenchPrefab;
     public Material grassMaterial;
-    [SerializeField] AudioClip pathBlockedAudioClip, plantAudioClip, drillAudioClip, walkAudioClip;   
-     // Variables privadas para el movimiento
-    private bool isMoving = false;             // Indica si el jugador está en movimiento
+    // Variables privadas para el movimiento
+    private bool isMoving = false;              // Indica si el jugador está en movimiento
     private Vector3 targetPos;                 // Posición objetivo del movimiento
-    private Quaternion targetRot;               // Rotación objetivo del movimiento
-   
-     private Animator animator;
+    private Quaternion targetRot;              // Rotación objetivo del movimiento
+
+
+    private Animator animator;
     // Diccionarios para almacenar árboles y trincheras
     public Dictionary<Vector3, GameObject> PlantedTrees { get; private set; } = new Dictionary<Vector3, GameObject>();
     public Dictionary<Vector3, GameObject> BuiltTrenches { get; private set; } = new Dictionary<Vector3, GameObject>();
 
     void Start()
     {
-    animator = GetComponent<Animator>();
-    
+        animator = GetComponent<Animator>();
+
         targetPos = transform.position;
         targetRot = transform.rotation;
-   
+
     }
+
 
     void Update()
     {
+
+
         if (!isMoving)
-        {
-             if (!isMoving)
         {
             Vector3 movement = Vector3.zero;
 
@@ -58,7 +60,7 @@ public class Grid3DPlayerController : MonoBehaviour
             PlantTree();
         else if (Input.GetKeyDown(KeyCode.R))
             BuildTrench();
-        
+
         // Manejo de animaciones adicionales
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -68,8 +70,13 @@ public class Grid3DPlayerController : MonoBehaviour
         {
             animator.SetBool("Open_Anim", !animator.GetBool("Open_Anim"));
         }
-        }
+
     }
+    /// <summary>
+    /// Establece el objetivo de movimiento basado en la dirección dada.
+    /// </summary>
+    /// <param name="direction">Dirección normalizada del movimiento.</param>
+
     private void SetMoveTarget(Vector3 direction)
     {
         isMoving = true;
@@ -88,6 +95,7 @@ public class Grid3DPlayerController : MonoBehaviour
     {
         if (isMoving)
         {
+            AudioManager.Instance.PlaySFX(walkingAudioClip, 0.7f);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
             animator.SetBool("Walk_Anim", true);
@@ -101,8 +109,8 @@ public class Grid3DPlayerController : MonoBehaviour
             }
         }
     }
- 
-     /// <summary>
+
+    /// <summary>
     /// Planta un árbol en la posición actual del jugador si no hay uno ya plantado.
     /// </summary>
     private void PlantTree()
@@ -112,20 +120,17 @@ public class Grid3DPlayerController : MonoBehaviour
         if (!PlantedTrees.ContainsKey(position))
         {
             GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
+            AudioManager.Instance.PlaySFX(plantingAudioClip, 0.7f);
             PlantedTrees[position] = tree;
-            AudioManager.Instance.PlaySFX(plantAudioClip, 1.0f);
 
             // Asegurarse de que el árbol no se destruya automáticamente
             DontDestroyOnLoad(tree);
 
             ChangeGroundMaterial(position, grassMaterial);
 
-            Debug.Log("Árbol plantado en: " + position);
+
         }
-        else
-        {
-            Debug.Log("Ya hay un árbol en esta posición: " + position);
-        }
+
     }
 
     /// <summary>
@@ -138,10 +143,11 @@ public class Grid3DPlayerController : MonoBehaviour
         if (!BuiltTrenches.ContainsKey(position))
         {
             GameObject trench = Instantiate(trenchPrefab, position, Quaternion.identity);
+            AudioManager.Instance.PlaySFX(drillingAudioClip, 0.7f);
             BuiltTrenches[position] = trench;
-            AudioManager.Instance.PlaySFX(drillAudioClip, 1.0f);
         }
     }
+
     /// <summary>
     /// Obtiene la posición del jugador ajustada a la cuadrícula.
     /// </summary>
@@ -162,4 +168,13 @@ public class Grid3DPlayerController : MonoBehaviour
             hit.collider.GetComponent<Renderer>().material = material;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Limit"))
+        {
+            AudioManager.Instance.PlaySFX(pathBlockedAudioClip, 0.7f);
+        }
+    }
+
 }
