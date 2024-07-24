@@ -10,20 +10,20 @@ public class Grid3DPlayerController : MonoBehaviour
     public GameObject treePrefab;
     public GameObject trenchPrefab;
     public Material grassMaterial;
-    
+    [SerializeField] AudioClip pathBlockedAudioClip, plantAudioClip, drillAudioClip, walkAudioClip;
     private bool isMoving = false;
-    private Vector3  targetPos;
-    private Quaternion  targetRot;
+    private Vector3 targetPos;
+    private Quaternion targetRot;
     private float timeToMove = 0.2f;
-    
+
     public Dictionary<Vector3, GameObject> PlantedTrees { get; private set; } = new Dictionary<Vector3, GameObject>();
     public Dictionary<Vector3, GameObject> BuiltTrenches { get; private set; } = new Dictionary<Vector3, GameObject>();
 
 
-    
+
     void Update()
     {
-       if (!isMoving)
+        if (!isMoving)
         {
             Vector3 movement = Vector3.zero;
 
@@ -46,7 +46,7 @@ public class Grid3DPlayerController : MonoBehaviour
                 PlantTree();
             else if (Input.GetKeyDown(KeyCode.R))
                 BuildTrench();
-        } 
+        }
     }
     private IEnumerator MovePlayer(Vector3 direction)
     {
@@ -60,6 +60,8 @@ public class Grid3DPlayerController : MonoBehaviour
         );
 
         targetRot = Quaternion.LookRotation(direction);
+
+        AudioManager.Instance.PlaySFX(walkAudioClip, 1.0f);
 
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
@@ -75,34 +77,36 @@ public class Grid3DPlayerController : MonoBehaviour
     }
     private void PlantTree()
     {
-         Vector3 position = GetGridPosition();
-    
-    if (!PlantedTrees.ContainsKey(position))
-    {
-        GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
-        PlantedTrees[position] = tree;
-        
-        // Asegurarse de que el árbol no se destruya automáticamente
-        DontDestroyOnLoad(tree);
-        
-        ChangeGroundMaterial(position, grassMaterial);
-        
-        Debug.Log("Árbol plantado en: " + position);
-    }
-    else
-    {
-        Debug.Log("Ya hay un árbol en esta posición: " + position);
-    }
+        Vector3 position = GetGridPosition();
+
+        if (!PlantedTrees.ContainsKey(position))
+        {
+            GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
+            PlantedTrees[position] = tree;
+            AudioManager.Instance.PlaySFX(plantAudioClip, 1.0f);
+
+            // Asegurarse de que el árbol no se destruya automáticamente
+            DontDestroyOnLoad(tree);
+
+            ChangeGroundMaterial(position, grassMaterial);
+
+            Debug.Log("Árbol plantado en: " + position);
+        }
+        else
+        {
+            Debug.Log("Ya hay un árbol en esta posición: " + position);
+        }
     }
 
     private void BuildTrench()
     {
         Vector3 position = GetGridPosition();
-        
+
         if (!BuiltTrenches.ContainsKey(position))
         {
             GameObject trench = Instantiate(trenchPrefab, position, Quaternion.identity);
             BuiltTrenches[position] = trench;
+            AudioManager.Instance.PlaySFX(drillAudioClip, 1.0f);
         }
     }
 

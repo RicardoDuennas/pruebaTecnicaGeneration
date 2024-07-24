@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     public float moveSpeed = 5f;
     public float attackDuration = 2f;
     public Material sandMaterial;
-
+    //[SerializeField] private AudioClip AlarmAudioClip, deathAudioClip, munchingAudioClip; 
     private Grid3DPlayerController playerController;
 
     void Start()
