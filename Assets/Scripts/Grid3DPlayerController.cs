@@ -44,10 +44,10 @@ public class Grid3DPlayerController : MonoBehaviour
         {
             Vector3 movement = Vector3.zero;
 
-            if (Input.GetKeyDown(KeyCode.W)) movement += Vector3.forward;
-            if (Input.GetKeyDown(KeyCode.S)) movement += Vector3.back;
-            if (Input.GetKeyDown(KeyCode.A)) movement += Vector3.left;
-            if (Input.GetKeyDown(KeyCode.D)) movement += Vector3.right;
+            if (Input.GetKeyDown(KeyCode.W)) movement += Vector3.left;
+            if (Input.GetKeyDown(KeyCode.S)) movement += Vector3.right;
+            if (Input.GetKeyDown(KeyCode.A)) movement += Vector3.back;
+            if (Input.GetKeyDown(KeyCode.D)) movement += Vector3.forward;
 
             if (movement != Vector3.zero)
             {
