@@ -73,21 +73,28 @@ public class Grid3DPlayerController : MonoBehaviour
 
     }
     /// <summary>
-    /// Establece el objetivo de movimiento basado en la dirección dada.
+    /// Establece el objetivo de movimiento basado en la dirección dada. Los movimientos se limitan al mapa.
     /// </summary>
     /// <param name="direction">Dirección normalizada del movimiento.</param>
 
     private void SetMoveTarget(Vector3 direction)
     {
         isMoving = true;
-        targetPos = transform.position + direction * cellSize;
-        targetPos = new Vector3(
-            Mathf.Round(targetPos.x / cellSize) * cellSize,
-            transform.position.y,
-            Mathf.Round(targetPos.z / cellSize) * cellSize
-        );
-        targetRot = Quaternion.LookRotation(direction);
+
+        Vector3 tempTarget = transform.position + direction * cellSize;
+
+        if ((tempTarget.x >= 0 && tempTarget.x <= 14) && (tempTarget.z >= 0 && tempTarget.z <= 14) )
+        {
+            targetPos = tempTarget;
+            targetPos = new Vector3(
+                Mathf.Round(targetPos.x / cellSize) * cellSize,
+                transform.position.y,
+                Mathf.Round(targetPos.z / cellSize) * cellSize
+            );
+            targetRot = Quaternion.LookRotation(direction);            
+        }
     }
+
     /// <summary>
     /// Mueve al jugador hacia la posición objetivo y lo rota hacia la dirección del movimiento.
     /// </summary>
