@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Alien-World.sln"
+    "dotnet.defaultSolution": "TerrAIformer.sln"
 }
