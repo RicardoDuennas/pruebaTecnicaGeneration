@@ -95,7 +95,7 @@ public class Grid3DPlayerController : MonoBehaviour
     {
         if (isMoving)
         {
-            AudioManager.Instance.PlaySFX(walkingAudioClip, 0.7f);
+            AudioManager.Instance.PlayContinuousSFX(walkingAudioClip, 0.7f);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
             animator.SetBool("Walk_Anim", true);
@@ -143,7 +143,7 @@ public class Grid3DPlayerController : MonoBehaviour
         if (!BuiltTrenches.ContainsKey(position))
         {
             GameObject trench = Instantiate(trenchPrefab, position, Quaternion.identity);
-            AudioManager.Instance.PlaySFX(drillingAudioClip, 0.7f);
+            AudioManager.Instance.PlaySFX(drillingAudioClip, 0.4f);
             BuiltTrenches[position] = trench;
         }
     }
@@ -176,5 +176,5 @@ public class Grid3DPlayerController : MonoBehaviour
             AudioManager.Instance.PlaySFX(pathBlockedAudioClip, 0.7f);
         }
     }
-
+    
 }
