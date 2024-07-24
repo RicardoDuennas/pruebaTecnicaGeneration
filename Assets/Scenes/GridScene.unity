@@ -135,15 +135,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 46631018077928901, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.098947
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 46631018077928901, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.026467
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 46631018077928901, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.06
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 46631018077928901, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -173,20 +173,69 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 47873448900140607, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
-      propertyPath: trenchPrefab
-      value: 
-      objectReference: {fileID: 8190319729649829924, guid: 5397631bc38dbea448492ca9d9a726e6, type: 3}
-    - target: {fileID: 47873448900140607, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
-      propertyPath: grassMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: ac271a70b84d6d34fb5478dc13fc29ce, type: 2}
     - target: {fileID: 49392465996238909, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
       propertyPath: m_Name
       value: robotSphere
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bd06dd2d0a6c1d4e859625c0ca11df9, type: 3}
+--- !u!1001 &535720665
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790599785014415509, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598521322468051503, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
+      propertyPath: m_Name
+      value: TurtleShellPolyart
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e7deb3dba1fdf04d9860e8419dd427f, type: 3}
 --- !u!1001 &577866701
 PrefabInstance:
   m_ObjectHideFlags: 0

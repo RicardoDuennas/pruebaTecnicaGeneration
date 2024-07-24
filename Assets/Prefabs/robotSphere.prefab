@@ -3406,6 +3406,7 @@ GameObject:
   - component: {fileID: 46631018077928901}
   - component: {fileID: 142059040043426959}
   - component: {fileID: 47873448900140607}
+  - component: {fileID: 442671466477868208}
   m_Layer: 0
   m_Name: robotSphere
   m_TagString: Untagged
@@ -3422,7 +3423,7 @@ Transform:
   m_GameObject: {fileID: 49392465996238909}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.18393, y: 0.02, z: -0.0021059}
-  m_LocalScale: {x: 4.7885013, y: 4.7885013, z: 4.7885013}
+  m_LocalScale: {x: 4.8, y: 4.8, z: 4.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 52582010261062191}
@@ -3459,19 +3460,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 49392465996238909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 633ad73993435c84c98d893597cf997c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2098370dfc3e430409bb7dc8e76976df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cellSize: 1
   moveSpeed: 5
   rotationSpeed: 720
-  treePrefab: {fileID: 137650, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
-  trenchPrefab: {fileID: 3256568923514548448, guid: a71ea9ef9b659a24f8107f8b0b13cdce, type: 3}
-  grassMaterial: {fileID: 2100000, guid: d81f69e3b6b6c944780a10bf30cd2e45, type: 2}
   pathBlockedAudioClip: {fileID: 8300000, guid: 35436ee4ae8987d4aab3971b89ef41f6, type: 3}
-  plantAudioClip: {fileID: 8300000, guid: 195b47dc74b7bc440ba204b4b9176a9c, type: 3}
-  drillAudioClip: {fileID: 8300000, guid: fa7b6fdd8622f514eaa7d9e365cb13d9, type: 3}
-  walkAudioClip: {fileID: 8300000, guid: 5c237ec1b5bafe542ba55bfe59677379, type: 3}
+  plantingAudioClip: {fileID: 8300000, guid: 195b47dc74b7bc440ba204b4b9176a9c, type: 3}
+  drillingAudioClip: {fileID: 8300000, guid: fa7b6fdd8622f514eaa7d9e365cb13d9, type: 3}
+  walkingAudioClip: {fileID: 8300000, guid: 5c237ec1b5bafe542ba55bfe59677379, type: 3}
+  treePrefab: {fileID: 8848872821412255961, guid: fed955ae0d144f34ab53064fd6061390, type: 3}
+  trenchPrefab: {fileID: 8190319729649829924, guid: 5397631bc38dbea448492ca9d9a726e6, type: 3}
+  grassMaterial: {fileID: 2100000, guid: ac271a70b84d6d34fb5478dc13fc29ce, type: 2}
+--- !u!54 &442671466477868208
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49392465996238909}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &49393019348852287
 GameObject:
   m_ObjectHideFlags: 0
