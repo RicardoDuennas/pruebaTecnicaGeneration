@@ -36,10 +36,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayContinuousSFX(AudioClip clip, float volume)
+    {
+        if (_soundEffects.isPlaying) return;
+        PlaySFX(clip, volume);
+    }
     public void PlaySFX(AudioClip clip, float volume)
     {
         _soundEffects.Stop();
         _soundEffects.PlayOneShot(clip, volume);
     }
+
+    
 
 }
