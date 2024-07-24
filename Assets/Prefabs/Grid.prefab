@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &404480536096168769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 404480536096168774}
+  - component: {fileID: 404480536096168768}
+  m_Layer: 0
+  m_Name: Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &404480536096168774
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404480536096168769}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404480536096168768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404480536096168769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c352c3f3475de546bbb198a56050cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainMaterial: {fileID: 2100000, guid: d81f69e3b6b6c944780a10bf30cd2e45, type: 2}
+  soilLevel: 0.6
+  scale: 0.3
+  size: 15
+  landTextures:
+  - {fileID: 2800000, guid: a9b80060b9cca6744be012df7f39d0d2, type: 3}
+  - {fileID: 2800000, guid: 91470a967b5f5f641865fcd5de45f99b, type: 3}
+  - {fileID: 2800000, guid: 782607fa077a53d418f9a68512691081, type: 3}
+  soilTextures:
+  - {fileID: 2800000, guid: 9f16d1e861123014a8ee0a00d674721b, type: 3}
+  - {fileID: 2800000, guid: 538b47f762c71254489ecf825e494612, type: 3}
+  - {fileID: 2800000, guid: 46a204ce8834a9d4d8f1939bdf523c65, type: 3}
+  deltaX: 0
+  deltaY: 0

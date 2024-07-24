@@ -1,8 +1,8 @@
 public class Cell
 {
-    public bool isWater;
+    public bool isSoil;
 
-    public Cell(bool isWater) {
-        this.isWater = isWater;
+    public Cell(bool isSoil) {
+        this.isSoil = isSoil;
     }
 }
