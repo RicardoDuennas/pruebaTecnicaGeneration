@@ -137,7 +137,6 @@ public class Grid : MonoBehaviour
         meshRenderer.material.mainTexture = texture;
     }
 
-    // metodo para calcular el porcentaje
     public float getLandPercentage(){
         int total = size * size;
         int sum = 0;
