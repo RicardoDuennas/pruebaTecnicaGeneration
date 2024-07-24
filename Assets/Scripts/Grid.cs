@@ -15,7 +15,7 @@ public class Grid : MonoBehaviour
     public int deltaY;
     
 
-    Cell[,] grid;
+    public Cell[,] grid;
 
     void Start() {
         float[,] noiseMap = new float[size, size];
@@ -151,13 +151,14 @@ public class Grid : MonoBehaviour
         }
         return (float)sum/total;
     }
-    public void swapSquare(Cell[,] grid, int x, int y){
+    public void swapSquare(Cell[,] grid, int x, int y, bool soil){
         MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
         int textureSize = size * 32; // Each cell is 32x32 pixels
         Texture2D texture = (Texture2D)meshRenderer.material.mainTexture;
 
         Cell cell = grid[x, y];
-        cell.isSoil = !cell.isSoil;
+
+        cell.isSoil = soil; 
         Texture2D cellTexture = cell.isSoil ? soilTextures[Random.Range(0, soilTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
 
         for (int ty = 0; ty < 32; ty++)
@@ -172,11 +173,4 @@ public class Grid : MonoBehaviour
         texture.Apply();
         meshRenderer.material.mainTexture = texture;
     }
-
-    [ContextMenu("Cambia el cuadro")]
-    public void trigger(){
-        swapSquare(grid, deltaX, deltaY);
-        Debug.Log(getLandPercentage());    
-    }
-
 }

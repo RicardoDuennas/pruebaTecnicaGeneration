@@ -15,6 +15,7 @@ public class Grid3DPlayerController : MonoBehaviour
     public GameObject treePrefab;
     public GameObject trenchPrefab;
     public Material grassMaterial;
+    public Grid gridObject;
     // Variables privadas para el movimiento
     private bool isMoving = false;              // Indica si el jugador está en movimiento
     private Vector3 targetPos;                 // Posición objetivo del movimiento
@@ -25,6 +26,7 @@ public class Grid3DPlayerController : MonoBehaviour
     // Diccionarios para almacenar árboles y trincheras
     public Dictionary<Vector3, GameObject> PlantedTrees { get; private set; } = new Dictionary<Vector3, GameObject>();
     public Dictionary<Vector3, GameObject> BuiltTrenches { get; private set; } = new Dictionary<Vector3, GameObject>();
+    public Cell[,] gridCells;
 
     void Start()
     {
@@ -32,6 +34,9 @@ public class Grid3DPlayerController : MonoBehaviour
 
         targetPos = transform.position;
         targetRot = transform.rotation;
+
+        gridObject = GameObject.Find("Grid").GetComponent<Grid>();
+        gridCells = gridObject.grid;
 
     }
 
@@ -56,9 +61,9 @@ public class Grid3DPlayerController : MonoBehaviour
         }
         MoveTowardsTarget();
 
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.P))
             PlantTree();
-        else if (Input.GetKeyDown(KeyCode.R))
+        else if (Input.GetKeyDown(KeyCode.O))
             BuildTrench();
 
         // Manejo de animaciones adicionales
@@ -73,21 +78,28 @@ public class Grid3DPlayerController : MonoBehaviour
 
     }
     /// <summary>
-    /// Establece el objetivo de movimiento basado en la dirección dada.
+    /// Establece el objetivo de movimiento basado en la dirección dada. Los movimientos se limitan al mapa.
     /// </summary>
     /// <param name="direction">Dirección normalizada del movimiento.</param>
 
     private void SetMoveTarget(Vector3 direction)
     {
         isMoving = true;
-        targetPos = transform.position + direction * cellSize;
-        targetPos = new Vector3(
-            Mathf.Round(targetPos.x / cellSize) * cellSize,
-            transform.position.y,
-            Mathf.Round(targetPos.z / cellSize) * cellSize
-        );
-        targetRot = Quaternion.LookRotation(direction);
+
+        Vector3 tempTarget = transform.position + direction * cellSize;
+
+        if ((tempTarget.x >= 0 && tempTarget.x <= 14) && (tempTarget.z >= 0 && tempTarget.z <= 14) )
+        {
+            targetPos = tempTarget;
+            targetPos = new Vector3(
+                Mathf.Round(targetPos.x / cellSize) * cellSize,
+                transform.position.y,
+                Mathf.Round(targetPos.z / cellSize) * cellSize
+            );
+            targetRot = Quaternion.LookRotation(direction);            
+        }
     }
+
     /// <summary>
     /// Mueve al jugador hacia la posición objetivo y lo rota hacia la dirección del movimiento.
     /// </summary>
@@ -117,7 +129,7 @@ public class Grid3DPlayerController : MonoBehaviour
     {
         Vector3 position = GetGridPosition();
 
-        if (!PlantedTrees.ContainsKey(position))
+        if (!PlantedTrees.ContainsKey(position) && gridCells[(int)position.x, (int)position.z].isSoil)
         {
             GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
             AudioManager.Instance.PlaySFX(plantingAudioClip, 0.7f);
@@ -126,7 +138,10 @@ public class Grid3DPlayerController : MonoBehaviour
             // Asegurarse de que el árbol no se destruya automáticamente
             DontDestroyOnLoad(tree);
 
-            ChangeGroundMaterial(position, grassMaterial);
+            gridCells[(int)position.x, (int)position.z].isSoil = false;    
+            gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);
+
+//            ChangeGroundMaterial(position, grassMaterial);
 
 
         }
