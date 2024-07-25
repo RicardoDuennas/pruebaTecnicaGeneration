@@ -492,26 +492,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 622081624759457361, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
-      propertyPath: m_text
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4467202471287095459, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 108.100006
-      objectReference: {fileID: 0}
-    - target: {fileID: 4467202471287095459, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -56.700005
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669793538139275846, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 39.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669793538139275846, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -56.7
-      objectReference: {fileID: 0}
     - target: {fileID: 6431571531608437896, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
       propertyPath: m_Name
       value: CanvasTimer
