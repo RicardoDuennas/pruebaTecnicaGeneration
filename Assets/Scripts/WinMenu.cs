@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverMenu : MonoBehaviour
+public class WinMenu : MonoBehaviour
 {
 
    public GameObject GameOverMenuC;
@@ -12,30 +12,24 @@ public class GameOverMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        GameOverMenuC.SetActive(false);
-        restartGame.SetActive(false);
-        winMenu.SetActive(false);
-    }
 
-    public void ShowGameOverMenu()
+    }
+    public void ShowWinMenu()
     {
         
-        GameOverMenuC.SetActive(true);
+        GameOverMenuC.SetActive(false);
         restartGame.SetActive(true);
-        winMenu.SetActive(false);
+        winMenu.SetActive(true);
         Time.timeScale = 0.0f;
     }
-    public void HideGameOVerMenu()
+    
+    public void HideWinMenu()
     {
         
         GameOverMenuC.SetActive(false);
         restartGame.SetActive(false);
         winMenu.SetActive(false);
         Time.timeScale = 1.0f;
+
     }
-    
-
-   
-
 }
