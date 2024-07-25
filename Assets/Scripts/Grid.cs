@@ -11,6 +11,7 @@ public class Grid : MonoBehaviour
     public int size = 15;
     public Texture2D[] landTextures;
     public Texture2D[] soilTextures;
+    public GameObject canvasSlider;
     
 
     public Cell[,] grid;
@@ -37,7 +38,7 @@ public class Grid : MonoBehaviour
 
         DrawTerrainMesh(grid);
         DrawTexture(grid);
-        Debug.Log(getLandPercentage());    
+        Debug.Log(getLandPercentage());  
     }
 
     void DrawTerrainMesh(Cell[,] grid) {
