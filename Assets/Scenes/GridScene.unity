@@ -590,7 +590,7 @@ PrefabInstance:
       objectReference: {fileID: 1997134385}
     - target: {fileID: 6431571531608437899, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
       propertyPath: time
-      value: 10
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6431571531608437899, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
       propertyPath: winMenu
@@ -598,7 +598,7 @@ PrefabInstance:
       objectReference: {fileID: 1003790504}
     - target: {fileID: 6431571531608437899, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
       propertyPath: winLevel
-      value: 0.3
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 6431571531608438006, guid: 45ec52ae493ebcb4a9ca3749f665c758, type: 3}
       propertyPath: winMenu
