@@ -11,8 +11,6 @@ public class Grid : MonoBehaviour
     public int size = 15;
     public Texture2D[] landTextures;
     public Texture2D[] soilTextures;
-    public int deltaX;
-    public int deltaY;
     
 
     public Cell[,] grid;
