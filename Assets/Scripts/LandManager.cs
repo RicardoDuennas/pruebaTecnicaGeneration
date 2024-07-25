@@ -17,7 +17,7 @@ public class LandManager : MonoBehaviour
     void Update()
     {
         int percInt = (int)(grid.getLandPercentage()*100);
-        Debug.Log(percInt);
+        //Debug.Log(percInt);
         textPerc.text = percInt.ToString();
         landBar.fillAmount = grid.getLandPercentage();
     }

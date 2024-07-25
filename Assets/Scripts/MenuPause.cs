@@ -12,7 +12,7 @@ public class MenuPause : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             if (pauseGame)
             {

@@ -30,13 +30,14 @@ public class Grid3DPlayerController : MonoBehaviour
 
     void Start()
     {
-        
+
         animator = GetComponent<Animator>();
 
         targetPos = transform.position;
         targetRot = transform.rotation;
 
-        gridObject = GameObject.Find("Grid").GetComponent<Grid>();
+        gridObject = GameObject.FindGameObjectWithTag("Grid").GetComponent<Grid>();
+        //gridObject = GameObject.Find("Grid").GetComponent<Grid>();
         gridCells = gridObject.grid;
 
     }
@@ -89,7 +90,7 @@ public class Grid3DPlayerController : MonoBehaviour
 
         Vector3 tempTarget = transform.position + direction * cellSize;
 
-        if ((tempTarget.x >= 0 && tempTarget.x <= 14) && (tempTarget.z >= 0 && tempTarget.z <= 14) )
+        if ((tempTarget.x >= 0 && tempTarget.x <= 14) && (tempTarget.z >= 0 && tempTarget.z <= 14))
         {
             targetPos = tempTarget;
             targetPos = new Vector3(
@@ -97,7 +98,7 @@ public class Grid3DPlayerController : MonoBehaviour
                 transform.position.y,
                 Mathf.Round(targetPos.z / cellSize) * cellSize
             );
-            targetRot = Quaternion.LookRotation(direction);            
+            targetRot = Quaternion.LookRotation(direction);
         }
     }
 
@@ -128,6 +129,7 @@ public class Grid3DPlayerController : MonoBehaviour
     /// </summary>
     private void PlantTree()
     {
+        gridCells = gridObject.grid;
         Vector3 position = GetGridPosition();
 
         if (!PlantedTrees.ContainsKey(position) && gridCells[(int)position.x, (int)position.z].isSoil)
@@ -139,7 +141,7 @@ public class Grid3DPlayerController : MonoBehaviour
             gridCells[(int)position.x, (int)position.z].isSoil = false;                 // Changes the state of the cell to land 
             gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);  // Changes the cell texture to land
 
-//            ChangeGroundMaterial(position, grassMaterial);
+            //            ChangeGroundMaterial(position, grassMaterial);
 
 
         }
@@ -189,5 +191,5 @@ public class Grid3DPlayerController : MonoBehaviour
             AudioManager.Instance.PlaySFX(pathBlockedAudioClip, 0.7f);
         }
     }
-    
+
 }
