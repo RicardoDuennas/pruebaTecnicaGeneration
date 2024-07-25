@@ -87,7 +87,7 @@ public class EnemyController : MonoBehaviour
             spawner.EnemyDied();
         }
 
-
+        enemyAudioSource.PlayOneShot(dyingAudioClip, 0.6f);
         Destroy(gameObject);
 
     }

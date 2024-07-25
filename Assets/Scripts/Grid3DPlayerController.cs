@@ -30,6 +30,7 @@ public class Grid3DPlayerController : MonoBehaviour
 
     void Start()
     {
+        
         animator = GetComponent<Animator>();
 
         targetPos = transform.position;
@@ -134,9 +135,6 @@ public class Grid3DPlayerController : MonoBehaviour
             GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
             AudioManager.Instance.PlaySFX(plantingAudioClip, 0.7f);
             PlantedTrees[position] = tree;
-
-            // Asegurarse de que el árbol no se destruya automáticamente
-            DontDestroyOnLoad(tree);
 
             gridCells[(int)position.x, (int)position.z].isSoil = false;                 // Changes the state of the cell to land 
             gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);  // Changes the cell texture to land
