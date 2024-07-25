@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-    [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip;
+    [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip, hittingTrench;
 
 
     private Grid3DPlayerController playerController;
@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
 
             if (isInTrench)
             {
+                HitMetal();
                 TakeDamage(trenchWeakenEffect * Time.deltaTime);
             }
 
@@ -87,7 +88,7 @@ public class EnemyController : MonoBehaviour
             spawner.EnemyDied();
         }
 
-        enemyAudioSource.PlayOneShot(dyingAudioClip, 0.6f);
+        AudioManager.Instance.PlaySFX(dyingAudioClip, 0.6f);
         Destroy(gameObject);
 
     }
@@ -171,7 +172,7 @@ public class EnemyController : MonoBehaviour
             }
 
             Debug.Log("Enemigo está destruyendo un árbol!");
-            playEnemySFX(eatingAudioClip);
+            PlayEnemySFX(eatingAudioClip);
             yield return new WaitForSeconds(attackDuration);
 
             if (playerController.PlantedTrees.ContainsKey(treePosition))
@@ -179,7 +180,7 @@ public class EnemyController : MonoBehaviour
                 GameObject tree = playerController.PlantedTrees[treePosition];
                 playerController.PlantedTrees.Remove(treePosition);
                 Destroy(tree);
-                playEnemySFX(treeFallingAudioClip);
+                PlayEnemySFX(treeFallingAudioClip);
                 Debug.Log("Árbol destruido en: " + treePosition);
                 ChangeGroundMaterial(treePosition);
                 gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
@@ -212,8 +213,16 @@ public class EnemyController : MonoBehaviour
         spawner = newSpawner;
     }
 
-    private void playEnemySFX(AudioClip clip)
+    private void PlayEnemySFX(AudioClip clip)
     {
         enemyAudioSource.PlayOneShot(clip, 1f);
+    }
+
+    private void HitMetal()
+    {
+        if (enemyAudioSource.isPlaying) return;
+
+        enemyAudioSource.pitch = (Random.Range(0.8f, 1.2f));
+        enemyAudioSource.PlayOneShot(hittingTrench, 0.6f);
     }
 }
