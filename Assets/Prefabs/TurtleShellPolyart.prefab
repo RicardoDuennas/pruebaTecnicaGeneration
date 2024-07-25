@@ -453,6 +453,7 @@ MonoBehaviour:
   eatingAudioClip: {fileID: 8300000, guid: 9aa1061519153564ba23a9f5a253f743, type: 3}
   dyingAudioClip: {fileID: 8300000, guid: 5b83a69a78f95634c9a5d62f5b95ecf1, type: 3}
   treeFallingAudioClip: {fileID: 8300000, guid: 7c0cc624309b2df4391fe5607adfaa5d, type: 3}
+  hittingTrench: {fileID: 8300000, guid: 0f04eefd23138b149b3de0d315e3c611, type: 3}
 --- !u!82 &7387850411138492389
 AudioSource:
   m_ObjectHideFlags: 0
