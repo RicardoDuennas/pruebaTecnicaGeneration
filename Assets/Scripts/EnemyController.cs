@@ -11,6 +11,16 @@ public class EnemyController : MonoBehaviour
     public Grid gridObject;
 
     private AudioSource enemyAudioSource;
+    public float maxHealth = 100f;
+    private float currentHealth;
+    public float trenchWeakenEffect = 10f; // Cantidad de daño por segundo en la trinchera
+    private bool isInTrench = false;
+    private EnemySpawner spawner;
+
+
+
+    
+
     [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip;
 
 
@@ -30,9 +40,59 @@ public class EnemyController : MonoBehaviour
 
         gridObject = GameObject.Find("Grid").GetComponent<Grid>();
         gridCells = gridObject.grid;
-
+       
+        currentHealth = maxHealth;
+        StartCoroutine(CheckTrenchCollision());
         StartCoroutine(EnemyRoutine());
     }
+
+    private IEnumerator CheckTrenchCollision()
+    {
+    while (true)
+    {
+        isInTrench = false;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Trench"))
+            {
+                isInTrench = true;
+                break;
+            }
+        }
+        
+        if (isInTrench)
+        {
+            TakeDamage(trenchWeakenEffect * Time.deltaTime);
+        }
+        
+        yield return null;
+    }
+    
+    }
+
+     private void TakeDamage(float damage)
+    {
+    currentHealth -= damage;
+    if (currentHealth <= 0)
+    {
+        Die();
+    }
+    }
+
+    private void Die()
+    {
+   if (spawner != null)
+    {
+        spawner.EnemyDied();
+    }
+
+
+    Destroy(gameObject);
+
+    }
+
+
 
     private IEnumerator EnemyRoutine()
     {
@@ -141,6 +201,11 @@ public class EnemyController : MonoBehaviour
                 Debug.Log("Terreno cambiado a arena en: " + position);
             }
         }
+    }
+
+    public void SetSpawner(EnemySpawner newSpawner)
+    {
+        spawner = newSpawner;
     }
 
     private void playEnemySFX(AudioClip clip)
