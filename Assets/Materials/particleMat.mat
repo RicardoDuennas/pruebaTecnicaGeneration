@@ -9,9 +9,10 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: particleMat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _EMISSION
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -75,6 +76,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.2924527, b: 0.76913935, a: 1}
-    - _EmissionColor: {r: 0.25109112, g: 0.088679194, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.76037735, b: 0.9308089, a: 1}
+    - _EmissionColor: {r: 0.6163223, g: 0.53396225, b: 1, a: 1}
   m_BuildTextureStacks: []
