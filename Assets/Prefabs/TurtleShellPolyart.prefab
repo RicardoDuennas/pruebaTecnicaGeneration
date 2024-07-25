@@ -447,6 +447,9 @@ MonoBehaviour:
   moveSpeed: 5
   attackDuration: 2
   sandMaterial: {fileID: 2100000, guid: ac271a70b84d6d34fb5478dc13fc29ce, type: 2}
+  gridObject: {fileID: 404480536096168768, guid: 0c089630d6ebb724e92fbbf03e6fbad5, type: 3}
+  maxHealth: 50
+  trenchWeakenEffect: 10
   eatingAudioClip: {fileID: 8300000, guid: 9aa1061519153564ba23a9f5a253f743, type: 3}
   dyingAudioClip: {fileID: 8300000, guid: 5b83a69a78f95634c9a5d62f5b95ecf1, type: 3}
   treeFallingAudioClip: {fileID: 8300000, guid: 7c0cc624309b2df4391fe5607adfaa5d, type: 3}
