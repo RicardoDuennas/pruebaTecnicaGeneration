@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
 
 
 
-    
+
 
     [SerializeField] AudioClip eatingAudioClip, dyingAudioClip, treeFallingAudioClip;
 
@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         enemyAudioSource = GetComponent<AudioSource>();
-        
+
         playerController = FindObjectOfType<Grid3DPlayerController>();
         if (playerController == null)
         {
@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
         gridObject = GameObject.Find("Grid").GetComponent<Grid>();
         gridCells = gridObject.grid;
-       
+
         currentHealth = maxHealth;
         StartCoroutine(CheckTrenchCollision());
         StartCoroutine(EnemyRoutine());
@@ -48,47 +48,47 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator CheckTrenchCollision()
     {
-    while (true)
-    {
-        isInTrench = false;
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
-        foreach (Collider collider in colliders)
+        while (true)
         {
-            if (collider.CompareTag("Trench"))
+            isInTrench = false;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+            foreach (Collider collider in colliders)
             {
-                isInTrench = true;
-                break;
+                if (collider.CompareTag("Trench"))
+                {
+                    isInTrench = true;
+                    break;
+                }
             }
+
+            if (isInTrench)
+            {
+                TakeDamage(trenchWeakenEffect * Time.deltaTime);
+            }
+
+            yield return null;
         }
-        
-        if (isInTrench)
-        {
-            TakeDamage(trenchWeakenEffect * Time.deltaTime);
-        }
-        
-        yield return null;
-    }
-    
+
     }
 
-     private void TakeDamage(float damage)
+    private void TakeDamage(float damage)
     {
-    currentHealth -= damage;
-    if (currentHealth <= 0)
-    {
-        Die();
-    }
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     private void Die()
     {
-   if (spawner != null)
-    {
-        spawner.EnemyDied();
-    }
+        if (spawner != null)
+        {
+            spawner.EnemyDied();
+        }
 
 
-    Destroy(gameObject);
+        Destroy(gameObject);
 
     }
 
@@ -132,60 +132,64 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator MoveToTree(Vector3 treePosition)
     {
-        while (Vector3.Distance(transform.position, treePosition) > 0.1f)
+        while (Vector3.Distance(transform.position, treePosition) > 0.1f && !isInTrench)
         {    // Mover hacia el árbol
             transform.position = Vector3.MoveTowards(transform.position, treePosition, moveSpeed * Time.deltaTime);
-            
+
             // Calcular la direccion hacia el árbol
             Vector3 directionToTree = (treePosition - transform.position).normalized;
 
             // Ignorar la componente y para que el enemigo no se mueva en el eje y
             directionToTree.y = 0;
-        
-    
-        // Rotar hacia el arbol 
-        if (directionToTree != Vector3.zero)
-        {
-             Quaternion targetRotation = Quaternion.LookRotation(directionToTree);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
+
+
+            // Rotar hacia el arbol 
+            if (directionToTree != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTree);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5f * Time.deltaTime);
+            }
+
+            yield return null;
         }
-    
-        yield return null;
-        }
-    
+
     }
 
     private IEnumerator AttackTree(Vector3 treePosition)
     {
-        Debug.Log("Iniciando ataque al árbol en: " + treePosition);
-
-        transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
-
-        if (!playerController.PlantedTrees.ContainsKey(treePosition))
+        while (!isInTrench)
         {
-            Debug.Log("El árbol ya no está aquí.");
-            yield break;
-        }
 
-        Debug.Log("Enemigo está destruyendo un árbol!");
-        playEnemySFX(eatingAudioClip);
-        yield return new WaitForSeconds(attackDuration);
+            Debug.Log("Iniciando ataque al árbol en: " + treePosition);
 
-        if (playerController.PlantedTrees.ContainsKey(treePosition))
-        {
-            GameObject tree = playerController.PlantedTrees[treePosition];
-            playerController.PlantedTrees.Remove(treePosition);
-            Destroy(tree);
-            playEnemySFX(treeFallingAudioClip);
-            Debug.Log("Árbol destruido en: " + treePosition);
-            ChangeGroundMaterial(treePosition);
-            gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
-            gridObject.swapSquare(gridCells, (int)treePosition.x, (int)treePosition.z, true);   // Changes the cell texture to soil
+            transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
 
-        }
-        else
-        {
-            Debug.Log("El árbol fue removido durante el ataque.");
+            if (!playerController.PlantedTrees.ContainsKey(treePosition))
+            {
+                Debug.Log("El árbol ya no está aquí.");
+                yield break;
+            }
+
+            Debug.Log("Enemigo está destruyendo un árbol!");
+            playEnemySFX(eatingAudioClip);
+            yield return new WaitForSeconds(attackDuration);
+
+            if (playerController.PlantedTrees.ContainsKey(treePosition))
+            {
+                GameObject tree = playerController.PlantedTrees[treePosition];
+                playerController.PlantedTrees.Remove(treePosition);
+                Destroy(tree);
+                playEnemySFX(treeFallingAudioClip);
+                Debug.Log("Árbol destruido en: " + treePosition);
+                ChangeGroundMaterial(treePosition);
+                gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
+                gridObject.swapSquare(gridCells, (int)treePosition.x, (int)treePosition.z, true);   // Changes the cell texture to soil
+
+            }
+            else
+            {
+                Debug.Log("El árbol fue removido durante el ataque.");
+            }
         }
     }
 

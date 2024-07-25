@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4587792825922903757}
+  - component: {fileID: 9141726973267911625}
   m_Layer: 0
   m_Name: Trench
   m_TagString: Trench
@@ -39,6 +40,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9141726973267911625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8190319729649829924}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0154133, y: 0.4207271, z: 1.206359}
+  m_Center: {x: -0.029744737, y: 0.1864515, z: -0.04628562}
 --- !u!1001 &962598493450116833
 PrefabInstance:
   m_ObjectHideFlags: 0
