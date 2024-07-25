@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using TMPro;
 
+
 public class Timer : MonoBehaviour
-{
+{   
     [SerializeField] TMP_Text timer;
     public GameOverMenu GameOverMenu;
+    public WinMenu winMenu;
+    public Grid grid;
+    public float winLevel; 
     
     public float time = 5;
+    private bool won = false;
 
    
     // Update is called once per frame
@@ -33,6 +37,13 @@ public class Timer : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60F);
         // This function formats a string according to a specified pattern.
         timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+
+        if(grid.getLandPercentage() > winLevel && !won){
+            winMenu.ShowWinMenu();
+            won = true;
+        }
+
     }
 }
 

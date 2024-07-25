@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.408, y: 33.309}
+  m_AnchoredPosition: {x: 16.407991, y: 33.30899}
   m_SizeDelta: {x: 344.473, y: 114.195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &973553344
@@ -102,7 +102,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608093493}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -112,7 +112,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.0000009536743}
+  m_AnchoredPosition: {x: 0.00001335144, y: -0.000011444092}
   m_SizeDelta: {x: 312.05, y: 95.358}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1608093496
@@ -1012,6 +1012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverMenuC: {fileID: 6431571530244049370}
+  winMenu: {fileID: 0}
   restartGame: {fileID: 6431571531738855050}
 --- !u!1 &6431571530344597053
 GameObject:
@@ -1405,6 +1406,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 6431571530939845245}
   GameOverMenu: {fileID: 6431571530244049350}
+  winMenu: {fileID: 0}
+  grid: {fileID: 0}
+  winLevel: 0
   time: 120
 --- !u!114 &6431571531608438006
 MonoBehaviour:

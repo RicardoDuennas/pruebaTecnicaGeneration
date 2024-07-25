@@ -107,7 +107,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                Debug.Log("No se encontraron árboles. Esperando...");
+                //Debug.Log("No se encontraron árboles. Esperando...");
                 yield return new WaitForSeconds(1f);
             }
         }
@@ -161,17 +161,17 @@ public class EnemyController : MonoBehaviour
         while (!isInTrench)
         {
 
-            Debug.Log("Iniciando ataque al árbol en: " + treePosition);
+            //Debug.Log("Iniciando ataque al árbol en: " + treePosition);
 
             transform.LookAt(new Vector3(treePosition.x, transform.position.y, treePosition.z));
 
             if (!playerController.PlantedTrees.ContainsKey(treePosition))
             {
-                Debug.Log("El árbol ya no está aquí.");
+                //Debug.Log("El árbol ya no está aquí.");
                 yield break;
             }
 
-            Debug.Log("Enemigo está destruyendo un árbol!");
+            //Debug.Log("Enemigo está destruyendo un árbol!");
             PlayEnemySFX(eatingAudioClip);
             yield return new WaitForSeconds(attackDuration);
 
@@ -181,7 +181,7 @@ public class EnemyController : MonoBehaviour
                 playerController.PlantedTrees.Remove(treePosition);
                 Destroy(tree);
                 PlayEnemySFX(treeFallingAudioClip);
-                Debug.Log("Árbol destruido en: " + treePosition);
+                //Debug.Log("Árbol destruido en: " + treePosition);
                 ChangeGroundMaterial(treePosition);
                 gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
                 gridObject.swapSquare(gridCells, (int)treePosition.x, (int)treePosition.z, true);   // Changes the cell texture to soil
@@ -189,7 +189,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                Debug.Log("El árbol fue removido durante el ataque.");
+                //Debug.Log("El árbol fue removido durante el ataque.");
             }
         }
     }
@@ -203,7 +203,7 @@ public class EnemyController : MonoBehaviour
             if (renderer != null)
             {
                 renderer.material = sandMaterial;
-                Debug.Log("Terreno cambiado a arena en: " + position);
+                //Debug.Log("Terreno cambiado a arena en: " + position);
             }
         }
     }
