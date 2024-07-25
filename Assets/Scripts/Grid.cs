@@ -38,7 +38,6 @@ public class Grid : MonoBehaviour
 
         DrawTerrainMesh(grid);
         DrawTexture(grid);
-        Debug.Log(getLandPercentage());  
     }
 
     void DrawTerrainMesh(Cell[,] grid) {
