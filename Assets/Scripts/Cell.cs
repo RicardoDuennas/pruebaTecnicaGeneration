@@ -1,8 +1,8 @@
 public class Cell
 {
-    public bool isSoil;
+    public bool isActive;
 
-    public Cell(bool isSoil) {
-        this.isSoil = isSoil;
+    public Cell(bool isActive) {
+        this.isActive = isActive;
     }
 }

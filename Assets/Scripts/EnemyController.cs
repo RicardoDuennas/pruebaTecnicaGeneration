@@ -183,7 +183,7 @@ public class EnemyController : MonoBehaviour
                 PlayEnemySFX(treeFallingAudioClip);
                 //Debug.Log("Árbol destruido en: " + treePosition);
                 ChangeGroundMaterial(treePosition);
-                gridCells[(int)treePosition.x, (int)treePosition.z].isSoil = true;                  // Changes the state of the cell to soil
+                gridCells[(int)treePosition.x, (int)treePosition.z].isActive = true;                  // Changes the state of the cell to soil
                 gridObject.swapSquare(gridCells, (int)treePosition.x, (int)treePosition.z, true);   // Changes the cell texture to soil
 
             }

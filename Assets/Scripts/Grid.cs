@@ -10,6 +10,7 @@ public class Grid : MonoBehaviour
     public float scale = .1f;
     public int size = 15;
     public Texture2D[] landTextures;
+    public Texture2D[] burntTextures;
     public Texture2D[] soilTextures;
     public GameObject canvasSlider;
     
@@ -17,21 +18,13 @@ public class Grid : MonoBehaviour
     public Cell[,] grid;
 
     void Start() {
-        float[,] noiseMap = new float[size, size];
-        (float xOffset, float yOffset) = (Random.Range(-10000f, 10000f), Random.Range(-10000f, 10000f));
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
-                float noiseValue = Mathf.PerlinNoise(x * scale + xOffset, y * scale + yOffset);
-                noiseMap[x, y] = noiseValue;
-            }
-        }
 
         grid = new Cell[size, size];
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
-                float noiseValue = noiseMap[x, y];
-                bool isSoil = noiseValue < soilLevel;
-                Cell cell = new Cell(isSoil);
+
+                bool isActive = true;
+                Cell cell = new Cell(isActive);
                 grid[x, y] = cell;
             }
         }
@@ -48,7 +41,7 @@ public class Grid : MonoBehaviour
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 Cell cell = grid[x, y];
-           /*      if(!cell.isSoil) { */
+           /*      if(!cell.isActive) { */
                     Vector3 a = new Vector3(x - .5f, 0, y + .5f);
                     Vector3 b = new Vector3(x + .5f, 0, y + .5f);
                     Vector3 c = new Vector3(x - .5f, 0, y - .5f);
@@ -88,7 +81,7 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < size; x++)
             {
                 Cell cell = grid[x, y];
-                texture.SetPixel(x, y, cell.isSoil ? waterTexture.GetPixel(x, y) : landTexture.GetPixel(x, y));
+                texture.SetPixel(x, y, cell.isActive ? waterTexture.GetPixel(x, y) : landTexture.GetPixel(x, y));
             }
         }
 
@@ -112,7 +105,7 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < size; x++)
             {
                 Cell cell = grid[x, y];
-                Texture2D cellTexture = cell.isSoil ? soilTextures[Random.Range(0, soilTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
+                Texture2D cellTexture = landTextures[Random.Range(0, landTextures.Length)];
 
                 for (int ty = 0; ty < 32; ty++)
                 {
@@ -143,12 +136,13 @@ public class Grid : MonoBehaviour
             for (int x = 0; x < size; x++)
             {
                 Cell cell = grid[x, y];
-                if (!cell.isSoil) sum += 1;
-                //Debug.Log($"{x} {y} {cell.isSoil} {sum} {(float)sum/total*100}");
+                if (!cell.isActive) sum += 1;
+                //Debug.Log($"{x} {y} {cell.isActive} {sum} {(float)sum/total*100}");
             }
         }
         return (float)sum/total;
     }
+
     public void swapSquare(Cell[,] grid, int x, int y, bool soil){
         MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
         int textureSize = size * 32; // Each cell is 32x32 pixels
@@ -156,8 +150,8 @@ public class Grid : MonoBehaviour
 
         Cell cell = grid[x, y];
 
-        cell.isSoil = soil; 
-        Texture2D cellTexture = cell.isSoil ? soilTextures[Random.Range(0, soilTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
+        cell.isActive = soil; 
+        Texture2D cellTexture = cell.isActive ? soilTextures[Random.Range(0, burntTextures.Length)] : landTextures[Random.Range(0, landTextures.Length)];
 
         for (int ty = 0; ty < 32; ty++)
         {

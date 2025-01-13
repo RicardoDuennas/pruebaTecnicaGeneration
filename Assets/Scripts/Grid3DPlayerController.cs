@@ -22,6 +22,7 @@ public class Grid3DPlayerController : MonoBehaviour
     private Quaternion targetRot;              // Rotación objetivo del movimiento
 
 
+
     private Animator animator;
     // Diccionarios para almacenar árboles y trincheras
     public Dictionary<Vector3, GameObject> PlantedTrees { get; private set; } = new Dictionary<Vector3, GameObject>();
@@ -67,6 +68,11 @@ public class Grid3DPlayerController : MonoBehaviour
             PlantTree();
         else if (Input.GetKeyDown(KeyCode.O))
             BuildTrench();
+        else if (Input.GetKeyDown(KeyCode.F))
+            Debug.Log(FireManager.Instance.countFires());
+        else if (Input.GetKeyDown(KeyCode.X)){
+            FireManager.Instance.deleteFire((int)transform.position.x, (int)transform.position.z);                            
+        }
 
         // Manejo de animaciones adicionales
         if (Input.GetKeyDown(KeyCode.Space))
@@ -132,13 +138,13 @@ public class Grid3DPlayerController : MonoBehaviour
         gridCells = gridObject.grid;
         Vector3 position = GetGridPosition();
 
-        if (!PlantedTrees.ContainsKey(position) && gridCells[(int)position.x, (int)position.z].isSoil)
+        if (!PlantedTrees.ContainsKey(position) && gridCells[(int)position.x, (int)position.z].isActive)
         {
             GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
             AudioManager.Instance.PlaySFX(plantingAudioClip, 0.7f);
             PlantedTrees[position] = tree;
 
-            gridCells[(int)position.x, (int)position.z].isSoil = false;                 // Changes the state of the cell to land 
+            gridCells[(int)position.x, (int)position.z].isActive = false;                 // Changes the state of the cell to land 
             gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);  // Changes the cell texture to land
 
             //            ChangeGroundMaterial(position, grassMaterial);
@@ -148,6 +154,30 @@ public class Grid3DPlayerController : MonoBehaviour
 
     }
 
+    public void Burn(Vector3 pos)
+    {
+
+        gridCells = gridObject.grid;
+
+        Vector3 position = new Vector3(Mathf.Round(pos.x / cellSize) * cellSize,
+                           0,
+                           Mathf.Round(pos.z / cellSize) * cellSize);
+
+        if (!PlantedTrees.ContainsKey(position) && gridCells[(int)position.x, (int)position.z].isActive)
+        {
+            GameObject tree = Instantiate(treePrefab, position, Quaternion.identity);
+            AudioManager.Instance.PlaySFX(plantingAudioClip, 0.7f);
+            PlantedTrees[position] = tree;
+
+            gridCells[(int)position.x, (int)position.z].isActive = false;                 // Changes the state of the cell to land 
+            gridObject.swapSquare(gridCells, (int)position.x, (int)position.z, false);  // Changes the cell texture to land
+
+            //            ChangeGroundMaterial(position, grassMaterial);
+
+
+        }
+
+    }
     /// <summary>
     /// Construye una trinchera en la posición actual del jugador si no hay una ya construida.
     /// </summary>
