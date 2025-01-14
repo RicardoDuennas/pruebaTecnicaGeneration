@@ -8,7 +8,7 @@ public class ItemPickup : MonoBehaviour
     void Pickup()
     {
         Destroy(gameObject);
-        if (InventoryManager.Instance.Count() < 3)
+        if (InventoryManager.Instance.Count() < 10)
         {
             // Clean content before update list
             InventoryManager.Instance.Add(Item);

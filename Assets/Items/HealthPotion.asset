@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Health Potion
   value: 5
   icon: {fileID: -1244878327, guid: 2d26e7384be2c8b4ea55b97b6fb5f9b4, type: 3}
+  itemType: 1

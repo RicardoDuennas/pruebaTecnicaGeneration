@@ -10,6 +10,7 @@ public class InventoryManager : MonoBehaviour
 
     public Transform ItemContent;
     public GameObject InventoryItem;
+    public InventoryItemController[] InventoryItems;
     
     private void Awake()
     {
@@ -32,29 +33,35 @@ public class InventoryManager : MonoBehaviour
 
     public void ListItems()
     {
+        // Clear existing items first
+        Clean();
+
+        // Create new inventory items and set them up immediately
+        for (int i = 0; i < Items.Count; i++)
+        {
+            GameObject obj = Instantiate(InventoryItem, ItemContent);
+            var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
+            itemIcon.sprite = Items[i].icon;
+            
+            // Set up the controller right away
+            var controller = obj.GetComponent<InventoryItemController>();
+            if (controller != null)
+            {
+                controller.AddItem(Items[i]);
+            }
+        }
+
+        // Update the InventoryItems array
+        InventoryItems = ItemContent.GetComponentsInChildren<InventoryItemController>();
+    }
+
+
+    public void Clean()
+    {
         foreach (Transform item in ItemContent)
         {
             Destroy(item.gameObject);
         }
-
-        foreach (var item in Items)
-        {
-            GameObject obj = Instantiate(InventoryItem, ItemContent);
-            var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
-
-            itemIcon.sprite = item.icon;
-            
-        }
-    }
-    
-    void Start()
-    {
-        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

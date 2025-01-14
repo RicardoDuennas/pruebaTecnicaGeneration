@@ -22,7 +22,7 @@ public class GameOverMenu : MonoBehaviour
     {
         
         GameOverMenuC.SetActive(true);
-        restartGame.SetActive(true);
+//        restartGame.SetActive(true);
         winMenu.SetActive(false);
         Time.timeScale = 0.0f;
     }
@@ -30,7 +30,7 @@ public class GameOverMenu : MonoBehaviour
     {
         
         GameOverMenuC.SetActive(false);
-        restartGame.SetActive(false);
+  //      restartGame.SetActive(false);
         winMenu.SetActive(false);
         Time.timeScale = 1.0f;
     }

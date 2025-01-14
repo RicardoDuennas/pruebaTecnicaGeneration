@@ -9,15 +9,12 @@ public class Item : ScriptableObject
     public string itemName;
     public int value;
     public Sprite icon;
+    public ItemType itemType;
     // Start is called before the first frame update
-    void Start()
+    public enum ItemType
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        BluePotion,
+        RedPotion,
+        GreenPotion
     }
 }

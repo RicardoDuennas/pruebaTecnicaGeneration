@@ -17,8 +17,7 @@ public class Fire : MonoBehaviour
     
     private void Start()
     {
-        maxGrowthTime += Random.Range(1, 3);
-//        maxGrowthTime += Random.Range(10, 30);
+        maxGrowthTime += Random.Range(10, 30);
 
         transform.localScale = initialScale;
         targetScale = initialScale * maxScale;
@@ -73,8 +72,6 @@ public class Fire : MonoBehaviour
 
         int x = (int)transform.position.x;
         int y = (int)transform.position.z;
-
-        Debug.Log(dir1 + " " + dir2);
 
         if ((dir1 == 1) || (dir2 == 1))
         {

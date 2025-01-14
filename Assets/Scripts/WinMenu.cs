@@ -18,7 +18,7 @@ public class WinMenu : MonoBehaviour
     {
         
         GameOverMenuC.SetActive(false);
-        restartGame.SetActive(true);
+//        restartGame.SetActive(true);
         winMenu.SetActive(true);
         Time.timeScale = 0.0f;
     }
@@ -27,7 +27,7 @@ public class WinMenu : MonoBehaviour
     {
         
         GameOverMenuC.SetActive(false);
-        restartGame.SetActive(false);
+//        restartGame.SetActive(false);
         winMenu.SetActive(false);
         Time.timeScale = 1.0f;
 

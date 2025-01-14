@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Grid3DPlayerController : MonoBehaviour
 {   // Configuración pública
+    public static Grid3DPlayerController Instance;
     public float cellSize = 1f;
     public float moveSpeed = 5f;
     public float rotationSpeed = 720f;
@@ -29,6 +30,10 @@ public class Grid3DPlayerController : MonoBehaviour
     public Dictionary<Vector3, GameObject> BuiltTrenches { get; private set; } = new Dictionary<Vector3, GameObject>();
     public Cell[,] gridCells;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
 
@@ -63,16 +68,6 @@ public class Grid3DPlayerController : MonoBehaviour
             }
         }
         MoveTowardsTarget();
-
-        if (Input.GetKeyDown(KeyCode.P))
-            PlantTree();
-        else if (Input.GetKeyDown(KeyCode.O))
-            BuildTrench();
-        else if (Input.GetKeyDown(KeyCode.F))
-            Debug.Log(FireManager.Instance.countFires());
-        else if (Input.GetKeyDown(KeyCode.X)){
-            FireManager.Instance.deleteFire((int)transform.position.x, (int)transform.position.z);                            
-        }
 
         // Manejo de animaciones adicionales
         if (Input.GetKeyDown(KeyCode.Space))
@@ -113,7 +108,7 @@ public class Grid3DPlayerController : MonoBehaviour
     /// </summary>
     private void MoveTowardsTarget()
     {
-        if (isMoving)
+        if (isMoving && (Time.timeScale != 0))
         {
             AudioManager.Instance.PlayContinuousSFX(walkingAudioClip, 0.7f);
             transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
@@ -203,6 +198,13 @@ public class Grid3DPlayerController : MonoBehaviour
         return new Vector3(Mathf.Round(transform.position.x / cellSize) * cellSize,
                            0,
                            Mathf.Round(transform.position.z / cellSize) * cellSize);
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return new Vector3(transform.position.x,
+                           0,
+                           transform.position.z);
     }
 
     private void ChangeGroundMaterial(Vector3 position, Material material)

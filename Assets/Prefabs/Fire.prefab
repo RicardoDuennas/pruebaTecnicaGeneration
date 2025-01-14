@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 6602145987514392205}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: -8.75, y: 90, z: 0}
 --- !u!212 &5942846910406773162
 SpriteRenderer:
@@ -98,10 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e4bc70e0b65e99449d3fc8ec11549b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrowthTime: 6
+  maxGrowthTime: 20
   maxScale: 6
   initialScale: {x: 0.085, y: 0.15, z: 0.2}
-  fireManagerObject: {fileID: 0}
 --- !u!1 &5784346105410824731
 GameObject:
   m_ObjectHideFlags: 0

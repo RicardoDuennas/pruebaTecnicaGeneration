@@ -14,9 +14,23 @@ public class Timer : MonoBehaviour
     
     public float time = 5;
     private bool won = false;
+    private bool active = false;
 
    
     // Update is called once per frame
+
+    private void Start()
+    {
+        StartCoroutine(FireCheckGameEnd());
+    }
+
+    private IEnumerator FireCheckGameEnd()
+    {
+        yield return new WaitForSeconds(2);
+        active = true;
+    }
+
+
     void Update()
     {
         timer.text = ($" {time:F2}");
@@ -38,10 +52,11 @@ public class Timer : MonoBehaviour
         // This function formats a string according to a specified pattern.
         timer.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-
-        if(grid.getLandPercentage() > winLevel && !won){
+        if ((FireManager.Instance.countFires() == 0)  && !won)// && active)
+        {
             winMenu.ShowWinMenu();
             won = true;
+            
         }
 
     }
