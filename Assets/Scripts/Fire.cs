@@ -63,16 +63,18 @@ public class Fire : MonoBehaviour
     
     public void SpreadFire()
     {
-        int dir1 = Random.Range(1, 4);
+        int dir1 = Random.Range(1, 5);
         int dir2;
 
         do
         {
-            dir2  = Random.Range(1, 4); 
+            dir2  = Random.Range(1, 5); 
         } while (dir2 == dir1); 
 
         int x = (int)transform.position.x;
         int y = (int)transform.position.z;
+
+        Debug.Log(dir1 + " " + dir2);
 
         if ((dir1 == 1) || (dir2 == 1))
         {

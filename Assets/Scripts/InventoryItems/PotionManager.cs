@@ -4,10 +4,10 @@ using System.Collections;
 public class PotionManager : MonoBehaviour
 {
     [SerializeField] private GameObject potionPrefab;
-    [SerializeField] private float minSpawnTime = 3f;
-    [SerializeField] private float maxSpawnTime = 8f;
-    [SerializeField] private float minVisibleTime = 5f;
-    [SerializeField] private float maxVisibleTime = 10f;
+    [SerializeField] private float minSpawnTime = 1f; // 3f
+    [SerializeField] private float maxSpawnTime = 2f; // 8f
+    [SerializeField] private float minVisibleTime = 5f; // 5f; 
+    [SerializeField] private float maxVisibleTime = 10f; // 10f;
         
     private GameObject currentPotion;
     private bool isWaitingToSpawn = false;
