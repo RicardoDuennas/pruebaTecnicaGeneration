@@ -57,7 +57,6 @@ public class Fire : MonoBehaviour
     }
     public void StopFire()
     {
-        //Debug.Log(gameObject.transform.position);
         StopAllCoroutines();
         
     }
@@ -72,11 +71,8 @@ public class Fire : MonoBehaviour
             dir2  = Random.Range(1, 4); 
         } while (dir2 == dir1); 
 
-        Debug.Log(dir1 + " " + dir2);
-
         int x = (int)transform.position.x;
         int y = (int)transform.position.z;
-        Debug.Log("x: " + x + ", y: " + y);
 
         if ((dir1 == 1) || (dir2 == 1))
         {

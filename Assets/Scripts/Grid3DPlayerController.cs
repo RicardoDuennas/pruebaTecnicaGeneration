@@ -216,10 +216,10 @@ public class Grid3DPlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Limit"))
-        {
-            AudioManager.Instance.PlaySFX(pathBlockedAudioClip, 0.7f);
-        }
+        // if (collision.gameObject.CompareTag("Limit"))
+        // {
+        //     AudioManager.Instance.PlaySFX(pathBlockedAudioClip, 0.7f);
+        // }
     }
 
 }
